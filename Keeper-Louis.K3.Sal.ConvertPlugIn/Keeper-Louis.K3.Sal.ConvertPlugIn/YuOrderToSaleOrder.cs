@@ -44,10 +44,13 @@ namespace Keeper_Louis.K3.Sal.ConvertPlugIn
                         {
 
                             //1上下文，2物料masterid,3辅助属性内码id，
-                            long bomId = BOMServiceHelper.GetDefaultBomKey(this.Context, masterid, orgId, AuxPropId_Id,Enums.Enu_BOMUse.TYBOM);
-                            DynamicObject bomObject = viewService.LoadSingle(this.Context, bomId, bomMeta.BusinessInfo.GetDynamicObjectType());
-                            order["BomId"] = bomObject;
-                            order["BomId_Id"] = bomId;
+                            long bomId = BOMServiceHelper.GetDefaultBomKey(this.Context, masterid, orgId, AuxPropId_Id,Enums.Enu_BOMUse.TYBOM)>0? BOMServiceHelper.GetDefaultBomKey(this.Context, masterid, orgId, AuxPropId_Id, Enums.Enu_BOMUse.TYBOM):0;
+                            if (bomId>0)
+                            {
+                                DynamicObject bomObject = viewService.LoadSingle(this.Context, bomId, bomMeta.BusinessInfo.GetDynamicObjectType());
+                                order["BomId"] = bomObject;
+                                order["BomId_Id"] = bomId;
+                            }
                         }
                         
                     }
